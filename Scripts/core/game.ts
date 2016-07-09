@@ -7,25 +7,38 @@ let stage:createjs.Stage;
 
 let helloLabel:createjs.Text;
 
+let startButton:objects.Button; //reference to the button class
+
 function init():void {
     stage = new createjs.Stage(canvas); //instatiate the stage container
+    stage.enableMouseOver(20);
     createjs.Ticker.framerate = 60;
     createjs.Ticker.on("tick", gameLoop); // creates an eventlistener
     main(); //call the main game function
 }
 
 function gameLoop():void {
-    helloLabel.rotation += 2;
+    
     stage.update(); //refreshes the stage
+}
+
+function startButtonClick(event:createjs.MouseEvent) {
+    helloLabel.text = "clicked";
+    
 }
 
 function main():void {
     helloLabel = new createjs.Text("Hello World", "40px Consolas", "#000000");
-    helloLabel.regX= helloLabel.getMeasuredWidth() *0.5;
+    helloLabel.regX= helloLabel.getMeasuredWidth() * 0.5;
     helloLabel.regY = helloLabel.getMeasuredLineHeight() * 0.5;
     helloLabel.x = 320;
     helloLabel.y = 240;
     stage.addChild(helloLabel);
+
+    startButton = new objects.Button("../../Assets/images/startButton.png", 320, 340, true);
+    stage.addChild(startButton);
+
+    startButton.on("click", startButtonClick);
 }
 
 window.addEventListener("load", init);
